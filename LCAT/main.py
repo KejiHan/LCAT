@@ -14,22 +14,12 @@ import numpy as np
 import copy
 import math
 import random
-
-
-
-from models.densenet import DenseNet,DenseNet121,DenseNet201,DenseNet161,densenet_cifar
-from models.efficientnet import EfficientNetB0
-
-#from models.resnet_ori import ResNet18
 from models.resnet import ResNet18
-from models.wideresnet import wrn28x5,wrn28x10,wrn34x10
 
 from attacks import AttackerPolymer
 from autoattack import AutoAttack
 import random
 
-
-#from cleverhans.torch.attacks.projected_gradient_descent import projected_gradient_descent
 import copy
 parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
 parser.add_argument('--num_classes', type=int, default=10)
