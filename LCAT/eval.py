@@ -25,7 +25,7 @@ from vgg import VGG
 
 
 from models.resnet import ResNet18
-from models.wideresnet import wrn28x5,wrn28x10,wrn34x10
+
 from autoattack import AutoAttack
 from attacks import AttackerPolymer
 
@@ -57,68 +57,10 @@ testset = torchvision.datasets.CIFAR10(
 test_loader = torch.utils.data.DataLoader(
     testset, batch_size=batch_size, shuffle=False, num_workers=8)
 
-# Model
-print('==> Building model..')
-# net = VGG('VGG19')
-#net= ResNet18()
-# net = PreActResNet18()
-# net = GoogLeNet()
-#net = DenseNet121()
-# net = ResNeXt29_2x64d()
-# net = MobileNet()
-# net = MobileNetV2()
-# net = DPN92()
-# net = ShuffleNetG2()
-# net = SENet18()
-# net = ShuffleNetV2(1)
-# net = EfficientNetB0()
-# net = RegNetX_200MF()
-# net = SimpleDLA()
-
-
-
-
-
-class EMA(object):
-    def __init__(self, model, alpha=0.999, buffer_ema=True):
-        self.step = 0
-        self.model = copy.deepcopy(model)
-        self.alpha = alpha
-        self.buffer_ema = buffer_ema
-        self.shadow = self.get_model_state()
-        self.backup = {}
-        self.param_keys = [k for k, _ in self.model.named_parameters()]
-        self.buffer_keys = [k for k, _ in self.model.named_buffers()]
-
-    def update_params(self, model):
-        decay = min(self.alpha,(self.step + 1)/(self.step + 10))
-        state = model.state_dict()
-        for name in self.param_keys:
-            self.shadow[name].copy_(decay * self.shadow[name] + (1 - decay) * state[name])
-        for name in self.buffer_keys:
-            if self.buffer_ema:
-                self.shadow[name].copy_(decay * self.shadow[name] + (1 - decay) * state[name])
-            else:
-                self.shadow[name].copy_(state[name])
-        self.step += 1
-
-    def apply_shadow(self):
-        self.backup = self.get_model_state()
-        self.model.load_state_dict(self.shadow)
-
-    def restore(self):
-        self.model.load_state_dict(self.backup)
-
-    def get_model_state(self):
-        return {
-            k: v.clone().detach()
-            for k, v in self.model.state_dict().items()
-        }
 
 
 def eval_cifar():
-    #attck_list = ['apgd-ce', 'apgd-dlr', 'fab', 'square', 'apgd-t', 'fab-t']
-    attack_list=['apgd-ce','square']
+   
     net.eval()
     #net_orc.eval()
     correct=0
