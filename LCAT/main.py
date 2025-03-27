@@ -14,7 +14,7 @@ import numpy as np
 import copy
 import math
 import random
-import cv2
+
 
 
 from models.densenet import DenseNet,DenseNet121,DenseNet201,DenseNet161,densenet_cifar
@@ -68,12 +68,12 @@ transform_test = transforms.Compose([
 
 ])
 
-trainset = torchvision.datasets.CIFAR10I(
+trainset = torchvision.datasets.CIFAR10(
     root='datasets/', train=True, download=True, transform=transform_train)
 train_loader = torch.utils.data.DataLoader(
     trainset, batch_size=128, shuffle=True, num_workers=8)
 
-testset = torchvision.datasets.CIFAR10I(
+testset = torchvision.datasets.CIFAR10(
     root='/datasets/', train=False, download=True, transform=transform_test)
 test_loader = torch.utils.data.DataLoader(
     testset, batch_size=128, shuffle=False, num_workers=8)
@@ -293,7 +293,7 @@ def test(epoch):
     return tmp_acc
 if __name__=='__main__':
     print('==> Building model..')
-    net=ResNet18(mu=1)
+    net=ResNet18()
     net = net.to(device)
     optimizer = optim.Adam(net.parameters(), lr=args.lr, weight_decay=3.5e-7)
     Attackers = AttackerPolymer(args.epsilon, args.num_steps, args.step_size, args.num_classes, device)
