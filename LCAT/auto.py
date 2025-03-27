@@ -25,7 +25,7 @@ if __name__=='__main__':
 
     from models.resnet import ResNet18
     from robustbench import benchmark
-    net=ResNet18(1).to(device)
+    net=ResNet18().to(device)
     net.load_state_dict(torch.load('./model/cifar10_resnet18_tea_norm_2.pkl'))
 
 
