@@ -110,9 +110,7 @@ def test(epoch):
 
 
 if __name__=='__main__':
-    net=ResNet18(mu=1)
-   
-   
+    net=ResNet18()
     net = net.to(device)
 
     net.load_state_dict(torch.load('./model/cifar10_resnet18_tea_lact.pkl'))
