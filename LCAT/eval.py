@@ -168,7 +168,7 @@ def test(epoch):
 
 
 if __name__=='__main__':
-    net=ResNet18(mu=1)
+    net=ResNet18()
    
    
     net = net.to(device)
